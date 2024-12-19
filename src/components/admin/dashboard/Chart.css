@@ -1,0 +1,9 @@
+/* Graph section */
+.dashboard-graph {
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+  border-radius: 54px;
+  overflow: hidden;
+  /* height: 500px; */
+  /*flex-grow: 1; Allow it to take up remaining space */
+}
