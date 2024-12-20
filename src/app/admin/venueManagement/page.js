@@ -6,21 +6,28 @@ import Image from 'next/image';
 import Swal from 'sweetalert2';
 import showDeleteConfirm from '@/components/Modals/Delete';
 import showEditModal from '@/components/Modals/VenueEdit';
+import LoadingComponent from '@/components/LoadingComponent';
 
 function Page() {
     const [venueName, setVenueName] = useState("");
     const [cityName, setCityName] = useState("");
     const [venueList, setVenueList] = useState([]);
+    const [isLoading, setisLoading] = useState(false);
+
+
 
     const title = "Venue's List";
 
     useEffect(() => {
         const fetchVenues = async () => {
             try {
+                setisLoading(true);
                 const response = await axios.get('http://localhost:3000/api/venues/getvenues/');
                 setVenueList(response.data.venues);
             } catch (error) {
                 Swal.fire('Error', 'Error fetching venues: ' + error.message, 'error');
+            } finally{
+                setisLoading(false);
             }
         };
         fetchVenues();
@@ -83,6 +90,14 @@ function Page() {
         );
     };
 
+
+    if(isLoading){
+        return(
+          <LoadingComponent/>
+        )
+      }
+    
+      
     return (
         <div>
             <h1 className="text-xl font-bold my-3  xs:ml-0 ml-2">Venue Management</h1>

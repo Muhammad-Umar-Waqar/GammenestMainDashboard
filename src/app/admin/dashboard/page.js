@@ -583,6 +583,7 @@
 
 
 "use client";
+
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import "./Chart.css";
@@ -590,6 +591,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import "./Chart.css"
+import LoadingComponent from "@/components/LoadingComponent";
 function Page() {
 
 
@@ -610,7 +612,8 @@ function Page() {
   const [venues, setVenues] = useState([]);
 
   const [selectedArcadeDetails, setSelectedArcadeDetails] = useState(null);
-  const [isLoading, setisLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // Add isLoading state
+
 
   const handleVenueSelection = (selection) => {
     console.log(selection)
@@ -681,6 +684,7 @@ const sendData = async (arcade_id) => {
 
   const fetchArcadesByVenue = async (venue_id) => {
     try {
+      setIsLoading(true);
       const arcadesResponse = await axios.get(`${ARCADE_ROUTE_API_BASE_URL}arcadesbyvenue/${venue_id}`);
       const arcadesData = arcadesResponse.data.data || [];
 
@@ -711,11 +715,14 @@ const sendData = async (arcade_id) => {
       setTotalRevenue(totalRevenue);
     } catch (error) {
       console.error("Error fetching arcades:", error);
+    } finally{
+      setIsLoading(false);
     }
   };
 
   const fetchArcades = async () => {
     try {
+      setIsLoading(true);
       const arcadesResponse = await axios.get(`${ARCADE_ROUTE_API_BASE_URL}getarcades`);
       const arcadesData = arcadesResponse.data.data || [];
 
@@ -749,6 +756,8 @@ const sendData = async (arcade_id) => {
 
     } catch (error) {
       console.error("Error fetching arcades:", error);
+    } finally{
+      setIsLoading(false);
     }
   };
 
@@ -1005,7 +1014,15 @@ const sendData = async (arcade_id) => {
 <div
   className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 my-10 pt-10 sm:ml-[5px] gap-y-20 xl:max-w-[850px] xl:max-h-[500px] overflow-y-auto custom-scrollbar"
 >
-  {arcades.map((arcade) => (
+  {
+    isLoading ? <>
+    <div className="flex items-center  justify-center h-[400px] w-full">
+      <div className="animate-spin inline-block size-20 border-[3px] border-current border-t-transparent text-blue-600 rounded-full dark:text-blue-500" role="status" aria-label="loading">
+        <span className="sr-only">Loading...</span>
+      </div>
+    </div>
+    </> : <>
+      {arcades.map((arcade) => (
     <div
     onClick={() => handleArcadeClick(arcade.arcade_id)} 
       key={arcade.id}
@@ -1044,6 +1061,11 @@ const sendData = async (arcade_id) => {
       </div>
     </div>
   ))}
+    </>
+  }
+
+
+
 </div>
 
 

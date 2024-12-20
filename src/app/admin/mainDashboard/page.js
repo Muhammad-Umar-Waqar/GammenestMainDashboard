@@ -21,11 +21,7 @@ export default function MainDashboardPage() {
   const arcadeCoins = parseFloat(coins) || 0;
   const arcadeHardPlay = parseFloat(hardPlay) || 0;
 
-  const chartData = [
-    { x: "Apr", y: arcadeCoins, fillColor: "#6a0dad" },
-    { x: "May", y: arcadeCoins, fillColor: "#8a2be2" },
-    { x: "Jun", y: arcadeCoins, fillColor: "#7b68ee" },
-  ];
+
 
   useEffect(() => {
     const getArcadeApi = async () => {
@@ -33,6 +29,7 @@ export default function MainDashboardPage() {
       try {
         const response = await axios.get(
           `http://localhost:3001/api/v2/arcadeManagement/getarcadeapi/${arcade_id}`);
+
         console.log(response.data.data)
         setApi(response.data || []);
       } catch (error) {
@@ -76,7 +73,7 @@ export default function MainDashboardPage() {
     <div>
       <MainDashboard
         middleText={arcade_id}
-        chartData={chartData}
+        // chartData={chartData}
         imgSrc="#"
         rightText="Some venue details..."
         dataS1Text={arcadeCoins.toString()}

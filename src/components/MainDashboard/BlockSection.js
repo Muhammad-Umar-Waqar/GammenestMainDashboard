@@ -31,7 +31,7 @@ const BlockSection = (props) => {
       zip.file("ArcadeId.bmp", qrCodeBlob, { binary: true });
 
       // Add ArcadeId in a .txt file
-      const textContent = `ArcadeId: ${arcadeId}`;
+      const textContent = `Arcade API Key: ${arcadeId}`;
       zip.file("ArcadeId.txt", textContent);
 
       // Generate and trigger ZIP file download
