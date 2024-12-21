@@ -1032,7 +1032,7 @@ const sendData = async (arcade_id) => {
   return (
     <>
     
-    <Image src="/signinbgImage.png" height={1000} width={1000} alt="background Image" className='absolute  z-[-5] opacity-30 sm:block hidden' />
+    <Image src="/signinbgImage.png" height={1000} width={1000} alt="background Image" className='  absolute  z-[-5] opacity-30 sm:block hidden' />
     
     <div className="flex items-center sm:justify-start justify-center">
     
@@ -1096,7 +1096,7 @@ const sendData = async (arcade_id) => {
 
           {
     isLoading ? <>
-    <div className="flex items-center  justify-center h-[400px] w-[790px]">
+    <div className="flex items-center  justify-center h-[400px] xl:w-[790px]">
       <div className="animate-spin inline-block size-20 border-[3px] border-current border-t-transparent text-blue-600 rounded-full dark:text-blue-500" role="status" aria-label="loading">
         <span className="sr-only">Loading...</span>
       </div>
