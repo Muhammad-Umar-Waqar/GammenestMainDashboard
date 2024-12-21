@@ -1032,7 +1032,7 @@ const sendData = async (arcade_id) => {
   return (
     <>
     
-    <Image src="/signinbgImage.png" height={1000} width={1000} alt="background Image" className='  absolute  z-[-5] opacity-30 sm:block hidden' />
+    <Image src="/signinbgImage.png" height={1000} width={1000} alt="background Image" className=' h-[80%] w-[80%] absolute  z-[-5] opacity-30 sm:block hidden' />
     
     <div className="flex items-center sm:justify-start justify-center">
     
