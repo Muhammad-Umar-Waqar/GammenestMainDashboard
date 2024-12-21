@@ -649,20 +649,8 @@ const MainDashboard = (props) => {
         plotOptions: {
           bar: {
             columnWidth: "90%",
-            borderRadius: 30,
+            borderRadius:  window.innerWidth < 640 ? 12 : 20,
           },
-          responsive: [
-            {
-              breakpoint: 640, // Target devices below 'sm'
-              options: {
-                plotOptions: {
-                  bar: {
-                    borderRadius: 0, // Reduced border radius for smaller screens
-                  },
-                },
-              },
-            },
-          ],
         },
         xaxis: {
           categories: chartData.map((item) => item.x),
