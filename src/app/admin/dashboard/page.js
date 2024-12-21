@@ -600,7 +600,6 @@ function Page() {
   const USER_ROUTE_API_BASE_URL = process.env.NEXT_PUBLIC_USER_ROUTE_API_BASE_URL;
   const ARCADE_ROUTE_API_BASE_URL = process.env.NEXT_PUBLIC_ARCADE_ROUTE_API_BASE_URL;
   const VENUE_ROUTE_API_BASE_URL = process.env.NEXT_PUBLIC_VENUE_ROUTE_API_BASE_URL;
-  const { authState } = useAuth();
   const [arcades, setArcades] = useState([]);
   const [noOfVenues, setNoOfVenues] = useState('-');
   const [noOfArcades, setNoOfArcades] = useState('-');
@@ -640,8 +639,67 @@ function Page() {
   };
 
   // Function to send data every 30 seconds
-const sendData = async (arcade_id) => {
+// const sendData = async (arcade_id) => {
 
+//   const payload = { arcadeId: arcade_id, coins: 1, hardPlay: 1 };
+
+//   console.log(
+//     `[${new Date().toLocaleTimeString()}] Sending Payload: ${JSON.stringify(
+//       payload
+//     )}`
+//   );
+
+//   try {
+//     const response = await fetch('http://localhost:3000/api/ArcadeData', {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify(payload),
+//     });
+//     console.log("RESPECT++", response);
+//     if (!response.ok) {
+//       const errorResponse = await response.text(); // Capture response error details
+//       console.error(
+//         `[${new Date().toLocaleTimeString()}] Error: ${
+//           response.status
+//         } - ${errorResponse}`
+//       );
+//       return;
+//     }
+
+//     const result = await response.json();
+//     console.log(
+//       `[${new Date().toLocaleTimeString()}] Success Response: ${JSON.stringify(
+//         result
+//       )}`
+//     );
+
+//       // Update the arcades state immediately
+//     setArcades((prevArcades) =>
+//       prevArcades.map((arcade) =>
+//         arcade.arcade_id === arcade_id
+//           ? {
+//               ...arcade,
+//               coins: arcade.coins + 1, // Increment coins
+//               hardPlay: arcade.hardPlay + 1, // Increment hardPlay
+//             }
+//           : arcade
+//       )
+//     );
+
+
+//   } catch (error) {
+//     console.error(
+//       `[${new Date().toLocaleTimeString()}] Network Error: ${
+//         error.stack || error.message
+//       }`
+//     );
+//   }
+// };
+
+
+
+
+const sendData = async (arcade_id) => {
   const payload = { arcadeId: arcade_id, coins: 1, hardPlay: 1 };
 
   console.log(
@@ -651,7 +709,7 @@ const sendData = async (arcade_id) => {
   );
 
   try {
-    const response = await fetch('http://localhost:3000/api/ArcadeData', {
+    const response = await fetch("http://localhost:3000/api/ArcadeData", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -673,6 +731,19 @@ const sendData = async (arcade_id) => {
         result
       )}`
     );
+
+    // Update the arcades state immediately
+    setArcades((prevArcades) =>
+      prevArcades.map((arcade) =>
+        arcade.arcade_id === arcade_id
+          ? {
+              ...arcade,
+              coins: arcade.coins + 1, // Increment coins
+              hardPlay: arcade.hardPlay + 1, // Increment hardPlay
+            }
+          : arcade
+      )
+    );
   } catch (error) {
     console.error(
       `[${new Date().toLocaleTimeString()}] Network Error: ${
@@ -681,6 +752,7 @@ const sendData = async (arcade_id) => {
     );
   }
 };
+
 
   const fetchArcadesByVenue = async (venue_id) => {
     try {
@@ -784,7 +856,9 @@ const sendData = async (arcade_id) => {
         
         // setNoOfArcades(data.count);
        const  noOfArcades = data.count;
+      //  console.log("TO STRING", noOfArcades.toString().length);
        noOfArcades.toString().length < 2 ? setNoOfArcades(`0${noOfArcades}`) : setNoOfArcades(noOfArcades);
+       
         console.log("No of Arcades", noOfArcades);
       } catch (error) {
         console.error("Error fetching arcades count:", error);
@@ -958,11 +1032,11 @@ const sendData = async (arcade_id) => {
   return (
     <>
     
-    <Image src="/signinbgImage.png" height={1000} width={1000} className='absolute  z-[-5] opacity-30 sm:block hidden' />
-    <div className='flex xl:flex-row flex-col mt-5 justify-around items-center bg-cover bg-center z-0  ' >
-        {/* <div className='flex flex-col min-w-[850px] justify-center items-center'> */}
-        <div className='flex flex-col  justify-center items-center'>
-          <div className='bg-custom-headpurple flex rounded-full items-center justify-between p-2 xl:w-[800px] sm:w-full  xs:w-[320px] w-[250px] relative'>
+    <Image src="/signinbgImage.png" height={1000} width={1000} alt="background Image" className='absolute  z-[-5] opacity-30 sm:block hidden' />
+    
+    <div className="flex items-center sm:justify-start justify-center">
+    
+    <div className='bg-custom-headpurple mt-5 flex rounded-full items-center justify-between p-2 xl:w-[800px] sm:w-[85%]  xs:w-[320px] w-[250px] relative'>
             <h1 className='ml-3 font-bold text-2xl md:block hidden '>Dashboard</h1>
             {/* <div className='flex'> */}
             
@@ -977,7 +1051,7 @@ const sendData = async (arcade_id) => {
             
 
 
-          <div className=" p-10 flex items-center ">
+          <div className=" p-10 flex items-center justify-center mx-5 ">
             <div className="absolute xs:right-[2px] right-[2px] sm:right-2 z-20   border-[7px]  border-custom-headpurple rounded-full bg-purple-300 xs:pr-[10px] xs:px-5  xs:py-1 sm:px-5   p-3">
             <div className='text-sm text-start sm:flex items-center justify-left sm:space-x-1'> 
             <div className='' >No. Of  </div>
@@ -1010,18 +1084,29 @@ const sendData = async (arcade_id) => {
             </div>
           </div>
           </div>
+          </div>
 
-<div
-  className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 my-10 pt-10 sm:ml-[5px] gap-y-20 xl:max-w-[850px] xl:max-h-[500px] overflow-y-auto custom-scrollbar"
->
-  {
+
+
+    <div className='flex xl:flex-row   flex-col mt-5 justify-around items-center bg-cover bg-center z-0  ' >
+        {/* <div className='flex flex-col min-w-[850px] justify-center items-center'> */}
+        <div className='flex flex-col  justify-center items-center xl:order-1 order-2'>
+         
+
+
+          {
     isLoading ? <>
-    <div className="flex items-center  justify-center h-[400px] w-full">
+    <div className="flex items-center  justify-center h-[400px] w-[790px]">
       <div className="animate-spin inline-block size-20 border-[3px] border-current border-t-transparent text-blue-600 rounded-full dark:text-blue-500" role="status" aria-label="loading">
         <span className="sr-only">Loading...</span>
       </div>
     </div>
-    </> : <>
+    </> :
+
+<div
+  className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 my-10 pt-10 sm:ml-[5px] gap-y-20 xl:max-w-[850px] xl:max-h-[500px] overflow-y-auto custom-scrollbar"
+>
+ <>
       {arcades.map((arcade) => (
     <div
     onClick={() => handleArcadeClick(arcade.arcade_id)} 
@@ -1049,7 +1134,7 @@ const sendData = async (arcade_id) => {
         </h1>
       </div>
       <button 
- onClick={(e) => {
+          onClick={(e) => {
             e.stopPropagation();
             sendData(arcade.arcade_id);
           }}
@@ -1062,11 +1147,11 @@ const sendData = async (arcade_id) => {
     </div>
   ))}
     </>
-  }
 
 
 
 </div>
+  }
 
 
 
@@ -1074,7 +1159,7 @@ const sendData = async (arcade_id) => {
       </div>
 
 
-        <div className='w-[260px] sm:w-[450px] xl:w-[500px] xl:ml-3'>
+        <div className='w-[260px] sm:w-[450px] xl:w-[500px] xl:ml-3 xl:order-2 order-1'>
           <div>
             <div >
             <div className="relative w-[250px] sm:w-[450px] xl:w-[400px] mb-5">
