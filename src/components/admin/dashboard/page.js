@@ -209,7 +209,8 @@ function Page() {
                   src="/ManagDash.svg"
                   height={40}
                   width={40}
-                  className="sm:w-[40px] sm:h-[40px] w-[20px] h-[20px]"
+                  className="sm:w-[40px] sm:h-[40px]
+                   w-[20px] h-[20px]"
                 />
                 <h1 className="text-2xl ml-2 font-bold text-gray-700">08</h1>
               </div>
@@ -289,7 +290,7 @@ function Page() {
                 <h1 className="text-xl">Hard Play</h1>
                 <div className="flex items-center ">
                   <h1 className="text-md font-bold  text-2xl">60</h1>
-                  <Image src="/USD.svg" height={50} width={50} />
+                  <Image src="/Play.svg" height={50} width={50} />
                 </div>
                 <h1 className="text-lg">Plays</h1>
               </div>

@@ -707,7 +707,7 @@ const MainDashboard = (props) => {
 
         <div className="dashboard-graph">
           
-          <div className="relative flex flex-col rounded-xl bg-white text-gray-700 shadow-md" style={{ borderRadius: "54px", height: "441px" }}>
+          <div className="relative flex flex-col  bg-white text-gray-700 shadow-md rounded-md sm:rounded-[54px] h-[490px]  sm:h-[440px]">
               {/* Show dropdown for smaller devices */}
     <select
       className="value-dropdown"
@@ -983,13 +983,10 @@ const MainDashboard = (props) => {
   margin-bottom: 20px;
   padding: 5px;
 
-  /* background-color: #f0f0f0; */
-  /* border-radius: 54px; */
-  /* border: solid 3px #2c509a; */
+
   overflow: hidden;
   
-  /* height: 500px; */
-  /*flex-grow: 1; Allow it to take up remaining space */
+  
 }
 
 
@@ -1171,6 +1168,25 @@ const MainDashboard = (props) => {
 }
 
 
+@media (max-width: 450px) {
+  .middle-section .scrollable-content::-webkit-scrollbar {
+    width: 12px; /* Smaller width for the scrollbar */
+  }
+
+  .middle-section .scrollable-content::-webkit-scrollbar-thumb {
+    background: #888; /* Grey color for the thumb */
+    border-radius: 83px; /* Rounded corners for the thumb */
+    border: solid 1px rgba(0, 0, 0, 0.42);
+    background-color: #c3d7fd;
+  }
+
+  .middle-section .scrollable-content  {
+  text-align: left; /* Ensure the left text is aligned to the left */
+ padding-left: 0px;
+}
+}
+
+
 .middle-section .scrollable-content p {
   display: flex; /* Enable flexbox for the container */
   justify-content: space-between; /* Place text at each end of the container */
@@ -1182,13 +1198,13 @@ const MainDashboard = (props) => {
 }
 
 .middle-section .scrollable-content p span {
-  font-size: 20px;
+  font-size: 15px;
   color: #333;
 }
 
 .middle-section .scrollable-content  {
   text-align: left; /* Ensure the left text is aligned to the left */
-  margin-left: 17px;
+  
 }
 
 
@@ -1419,7 +1435,7 @@ p {
 
   .dashboard-graph {
     height: 450px; /* Reduce graph height */
-    border-radius: 30px; /* Adjust border radius */
+    border-radius: 0px; /* Adjust border radius */
 
   }
 
@@ -1431,8 +1447,8 @@ p {
 @media (max-width: 480px) {
 
   .dashboard-graph {
-    height: 450px; /* Reduce graph height */
-    border-radius: 30px; /* Adjust border radius */
+    height: 460px; /* Reduce graph height */
+    border-radius: 10px; /* Adjust border radius */
     max-width: 280px;
     border-radius: 65px;
   }

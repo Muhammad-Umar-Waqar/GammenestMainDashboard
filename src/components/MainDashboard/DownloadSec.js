@@ -12,11 +12,11 @@ const DownloadButton = ({ api, qrCodeUrl, arcadeId }) => {
     zip.file('ArcadeId.bmp', qrCodeBlob);
 
     // Add ArcadeId.txt (text file with arcadeId)
-    zip.file('ArcadeId.txt', `Arcade ID: ${arcadeId} \nAPI:  ${api}`);
+    zip.file(`${arcadeId}api${api}.txt`, `Arcade ID: ${arcadeId} \nAPI:  ${api}`);
 
     // Generate ZIP file
     zip.generateAsync({ type: 'blob' }).then(content => {
-      saveAs(content, 'ArcadeFiles.zip');
+      saveAs(content, `ArcadeID${arcadeId}zip`);
     });
   };
 

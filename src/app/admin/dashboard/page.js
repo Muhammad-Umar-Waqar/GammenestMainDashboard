@@ -1036,7 +1036,7 @@ const sendData = async (arcade_id) => {
     
     <div className="flex items-center sm:justify-start justify-center">
     
-    <div className='bg-custom-headpurple mt-5 flex rounded-full items-center justify-between p-2 xl:w-[800px] sm:w-[85%]  xs:w-[320px] w-[250px] relative'>
+    <div className='xs:bg-custom-headpurple mt-5 flex rounded-full items-center justify-between sm:p-2 sm:px-auto sm:py-auto py-3  xl:w-[800px] sm:w-[85%]  xs:w-[320px] w-[300px]  relative'>
             <h1 className='ml-3 font-bold text-2xl md:block hidden '>Dashboard</h1>
             {/* <div className='flex'> */}
             
@@ -1052,7 +1052,7 @@ const sendData = async (arcade_id) => {
 
 
           <div className=" p-10 flex items-center justify-center mx-5 ">
-            <div className="absolute xs:right-[2px] right-[2px] sm:right-2 z-20   border-[7px]  border-custom-headpurple rounded-full bg-purple-300 xs:pr-[10px] xs:px-5  xs:py-1 sm:px-5   p-3">
+            <div className="absolute xs:right-[2px] right-[2px] sm:right-2 z-20  sm:w-auto w-[110px] border-[7px]  border-custom-headpurple rounded-3xl  xs:rounded-full bg-purple-300 xs:pr-[10px] xs:px-5  xs:py-1 sm:px-5   p-3">
             <div className='text-sm text-start sm:flex items-center justify-left sm:space-x-1'> 
             <div className='' >No. Of  </div>
             <h1> Manager</h1>
@@ -1062,17 +1062,17 @@ const sendData = async (arcade_id) => {
                   <h1 className='text-2xl ml-2 font-bold text-gray-700'>{noOfManagers}</h1>
               </div>
             </div>
-            <div className="absolute xs:right-[105px] right-[80px] sm:right-[110px]   z-10  border-[7px] border-custom-headpurple rounded-full bg-purple-300   sm:pr-[60px] xs:pr-[10px] xs:px-5 xs:py-1 sm:px-5 p-3">
+            <div className="absolute xs:right-[105px] right-[95px] sm:right-[110px]  sm:w-auto w-[110px] z-10  border-[7px] border-custom-headpurple rounded-l-3xl  xs:rounded-full bg-purple-300  pr-[20px] sm:pr-[60px] xs:pr-[10px] xs:px-5 xs:py-1 sm:px-5 p-3">
             <div className='text-sm text-start sm:flex items-center justify-left sm:space-x-1'> 
             <div className='' >No. Of  </div>
             <h1> Arcade</h1>
             </div>
               <div className='flex items-center sm:justify-around justify-start'>
                   <Image src="/GameStick.svg" height={40} width={40} className='sm:w-[40px] sm:h-[40px] w-[20px] h-[20px]'/>
-                  <h1 className='text-2xl ml-2 font-bold text-gray-700'>{noOfArcades}</h1>
+                  <h1 className='text-2xl ml-2 font-bold text-gray-700 '>{noOfArcades}</h1>
               </div>
             </div>
-            <div className="absolute xs:right-[210px]  sm:right-[200px]   right-[160px]  z-8  border-[7px] border-custom-headpurple rounded-full bg-purple-300  sm:pr-[110px] xs:pr-[10px] xs:px-5 xs:py-[6px] sm:px-5 px-4 p-3">
+            <div className="absolute xs:right-[210px]  sm:right-[200px]  sm:left-auto  left-[2px] sm:w-auto w-[110px] z-8  border-[7px] border-custom-headpurple rounded-l-3xl  xs:rounded-full bg-purple-300   sm:pr-[110px] xs:pr-[10px] xs:px-5 xs:py-[6px] sm:px-5 px-4 p-3">
             <div className='text-sm text-start sm:flex items-center justify-left sm:space-x-1'> 
             <div className='' >No. Of  </div>
             <h1> Venues</h1>
@@ -1230,7 +1230,7 @@ const sendData = async (arcade_id) => {
                 <div className='border bg-custom-cardpeach border-gray-300 rounded-xl shadow-md   flex flex-col items-center justify-center sm:py-4 py-2 sm:gap-y-3'>
                   <h1 className="text-xl">Hard Play</h1>
                   <div className='flex items-center '>
-                    <h1 className="text-md font-bold  text-2xl" >{arcades.reduce((sum, arcade) => sum + (arcade.hardPlay || 0), 0)}</h1><Image src="/USD.svg" height={50} width={50} />
+                    <h1 className="text-md font-bold  text-2xl" >{arcades.reduce((sum, arcade) => sum + (arcade.hardPlay || 0), 0)}</h1><Image src="/Play.svg" height={50} width={50} />
                   </div>
                   <h1 className="text-lg" >Plays</h1>
                 </div>
