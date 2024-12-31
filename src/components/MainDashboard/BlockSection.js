@@ -49,7 +49,7 @@ const BlockSection = (props) => {
 
   return (
 
-    <div className='ml-1 bg-white border border-black rounded-xl p-5 sm:mt-7 sm:w-[400px] w-[300px] mb-5'>
+    <div className='ml-1 bg-white border border-black rounded-xl p-2 sm:p-5 sm:mt-7 sm:w-[420px] w-[300px] mb-5'>
               <h1 className='text-custom-headblue font-bold'>API Key:</h1>
               <div className="flex items-center justify-between gap-x-2 sm:gap-x-5 lg:gap-x-10">
                 <p className='text-start sm:text-md text-xs sm:w-auto w-[50%] break-words overflow-y-auto'>

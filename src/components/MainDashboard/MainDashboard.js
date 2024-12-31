@@ -583,7 +583,7 @@ const MainDashboard = (props) => {
             `http://localhost:3001/api/v2/chartData/data?measurement=${props.middleText}&timeRange=${timeRange}`
           );
           
-          console.log("RESO>>>>", response.data.data);
+
           
           const data = response.data.data.map((item) => {
             const [startTime] = item.timeRange.split(" to ").map((time) => new Date(time)); // Extract and parse start time
@@ -595,6 +595,8 @@ const MainDashboard = (props) => {
                 formattedTime = format(startTime, "mm:ss"); // Minutes and seconds
                 break;
               case "6h":
+                formattedTime = format(startTime, "mm:ss"); // Minutes and seconds
+                break;
               case "12h":
                 formattedTime = format(startTime, "hh:mm a"); // Hours and minutes
                 break;
@@ -870,8 +872,9 @@ const MainDashboard = (props) => {
             <img src={props.blockImageSrc} alt="Image description" />
           </div>
         </div> */}
-
+      <div className="flex items-center justify-center">
        <BlockSection api={props.api} blockImageSrc={props.blockImageSrc}/>
+      </div>
      
 
 
@@ -920,7 +923,7 @@ const MainDashboard = (props) => {
   grid-template-rows: auto 1fr; /* First row for the image, second row for content */
   grid-template-columns: 50% 50%; /* Two columns: 1st column for the graph (flex-grow), 2nd column for the data sections */
   gap: 20px; /* Space between the grid items */
-  padding-top: 20px;
+  padding-top: 2px;
   width: 93%;
 }
 
@@ -959,7 +962,7 @@ const MainDashboard = (props) => {
   display: flex;
   flex-direction: column;
   /* margin-right: 20px;   Space between graph and data panel */
-  padding: 20px;
+  padding: 10px;
 }
 
 .dashboard-middle > .text-section {
@@ -1055,7 +1058,7 @@ const MainDashboard = (props) => {
   grid-column: 2 / 3; /* Second column */
   display: flex;
   flex-direction: column;
-  margin-top: 5px;
+  margin-top: 3px;
 }
 
 /* Data sections container (arranging the data sections in a row) */
@@ -1401,7 +1404,7 @@ p {
     grid-template-columns: 1fr; /* Single column */
     grid-template-rows: auto auto auto; /* Adjust rows */
     gap: 15px; /* Reduce spacing */
-    padding: 10px;
+    padding: 5px;
     position: relative;
   }
 
@@ -1434,7 +1437,7 @@ p {
   }
 
   .dashboard-graph {
-    height: 450px; /* Reduce graph height */
+    height: 470px; /* Reduce graph height */
     border-radius: 0px; /* Adjust border radius */
 
   }
@@ -1450,7 +1453,7 @@ p {
     height: 460px; /* Reduce graph height */
     border-radius: 10px; /* Adjust border radius */
     max-width: 280px;
-    border-radius: 65px;
+    border-radius: 30px;
   }
 
 
