@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react'
 
 function Page() {
     const ARCADE_ROUTE_API_BASE_URL = process.env.NEXT_PUBLIC_ARCADE_ROUTE_API_BASE_URL;
-    const OTA_ROUTE_API_BASE_URL = process.env.NEXT_OTA_ROUTE_API_BASE_URL;
+    // const OTA_ROUTE_API_BASE_URL = process.env.NEXT_OTA_ROUTE_API_BASE_URL;
     const [arcadeList, setArcadeList] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null);
@@ -86,7 +86,7 @@ function Page() {
         };
 
 
-
+        fetchArcadeList();
         fetchVersionList();
     }, [])
 
