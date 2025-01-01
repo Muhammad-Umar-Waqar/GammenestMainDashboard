@@ -1,33 +1,40 @@
 'use client'
 
 import axios from 'axios';
-import Image from 'next/image';
+import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 
 
 function Page() {
     const ARCADE_ROUTE_API_BASE_URL = process.env.NEXT_PUBLIC_ARCADE_ROUTE_API_BASE_URL;
+    const OTA_ROUTE_API_BASE_URL = process.env.NEXT_OTA_ROUTE_API_BASE_URL;
     const [arcadeList, setArcadeList] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null);
-    const options = ["2.05.10", "2.05.11", "3.0.0"];
     const [selectedArcades, setSelectedArcades] = useState([]);
+    const [versionId, setVersionId] = useState('');
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [options, setOptions] = useState([]); // Dynamically fetched options
 
+   
 
     const handleSelect = (option) => {
-      setSelectedOption(option);
-      setIsOpen(false);
+        setSelectedOption(option);
+        setVersionId(option); // Update versionId based on selection
+        setIsOpen(false);
     };
+
     const [fileName, setFileName] = useState('');
     const [isDragging, setIsDragging] = useState(false);
   
-    const handleFileChange = (event) => {
-      const file = event.target.files[0];
-      if (file) {
-        setFileName(file.name);
-      }
+ const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            setFileName(file.name);
+            setSelectedFile(file);
+        }
     };
-  
+
     const handleDragOver = (event) => {
       event.preventDefault();
       setIsDragging(true);
@@ -68,8 +75,62 @@ function Page() {
             }
         };
 
-        fetchArcadeList();
+        const fetchVersionList = async () => {
+            try {
+                const response = await axios.get('http://localhost:3001/api/v2/otaRoutes/getVersion');
+                const versionData = response.data.data[0].map((item) => item.version_id); // Extract version_id
+                setOptions(versionData); // Update options dynamically
+            } catch (error) {
+                console.error('Error fetching version list:', error.message);
+            }
+        };
+
+
+
+        fetchVersionList();
     }, [])
+
+
+
+    const handleVersionChange = (event) => {
+        setVersionId(event.target.value);
+    };
+    
+
+    const handleSubmit = async () => {
+        if (!versionId) {
+            alert('Please provide a Version ID.');
+            return;
+        }
+        if (!selectedFile) {
+            alert('Please select a file to upload.');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('otaFile', selectedFile);
+        formData.append('version_id', versionId);
+
+      
+        
+
+        try {
+            const response = await axios.post(`http://localhost:3001/api/v2/otaRoutes/uploadFile`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+                console.log("response>>", response)
+            if (response.status === 201) {
+                alert('File uploaded successfully!');
+            }
+        } catch (error) {
+            console.error('Error uploading file:', error);
+            alert('Error uploading file. Please try again.');
+        }
+    };
+
+
 
 
     return (
@@ -90,6 +151,8 @@ function Page() {
                   name="arcade1"
                   className="sm:p-2  p-1 border border-black focus:outline-none rounded-full w-[170px] sm:w-[250px] md:w-[300px]"
                   placeholder="Enter Text"
+                  value={versionId}
+                  onChange={handleVersionChange}
                   />
                 <p className='absolute top-[-10] right-3 '>Eg. 3-05-12</p>
                 </div>
@@ -130,7 +193,8 @@ function Page() {
 
                 <div className="flex justify-end w-full space-x-4 mt-5 mb-2">
                 <button
-                  type="submit"
+                   type="button"
+                   onClick={handleSubmit}
                   className="bg-custom-headblue text-white py-1 px-6 rounded-xl hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
                 >
                   Submit
@@ -150,65 +214,62 @@ function Page() {
             <div>
                 <div className='flex flex-col justify-start items-start'>
                 <div className="flex justify-start items-center bg-gray-100">
-      <div className="relative min-w-[200px] my-2">
-        {/* Trigger Button */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left focus:outline-none "
-        >
-        <span className="block truncate">
-            {selectedOption ? (
-                <div>
-                    <h1 className='font-bold '>Version ID &nbsp; <span className='font-normal'> {selectedOption} </span></h1>
-                </div>
-            ) : (
-               <h1 className='font-bold'>Version ID</h1>
-                
-                
-            )}
-        </span>
-
-          <span className="absolute inset-y-0 right-0 flex items-center pr-2">
-            <svg
-              className={`h-5 w-5 transform transition-transform duration-300 ${
-                isOpen ? "rotate-180" : ""
-              }`}
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M5.293 9.293a1 1 0 011.414 0L10 12.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </span>
-        </button>
-
-        {/* Dropdown Options */}
-        {isOpen && (
-          <div
-            className="absolute z-10 mt-2 w-full bg-white shadow-lg max-h-60 rounded-md overflow-auto border border-gray-200 transition-transform transform scale-95 origin-top opacity-100 animate-dropdown"
-          >
-            {options.map((option, index) => (
-              <div
-                key={index}
-                onClick={() => handleSelect(option)}
-                className="cursor-pointer select-none relative py-2 pl-10 pr-4 "
-              >
-                <span
-                  className={`block truncate ${
-                    selectedOption === option ? "font-medium" : "font-normal"
-                  }`}
+                <div className="relative min-w-[200px] my-2">
+                <button
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left focus:outline-none"
                 >
-                  {option}
-                </span>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+                    <span className="block truncate">
+                        {selectedOption ? (
+                            <div>
+                                <h1 className="font-bold">
+                                    Version ID &nbsp;{' '}
+                                    <span className="font-normal">{selectedOption}</span>
+                                </h1>
+                            </div>
+                        ) : (
+                            <h1 className="font-bold">Version ID</h1>
+                        )}
+                    </span>
+
+                    <span className="absolute inset-y-0 right-0 flex items-center pr-2">
+                        <svg
+                            className={`h-5 w-5 transform transition-transform duration-300 ${
+                                isOpen ? 'rotate-180' : ''
+                            }`}
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                        >
+                            <path
+                                fillRule="evenodd"
+                                d="M5.293 9.293a1 1 0 011.414 0L10 12.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a 1 0 01-1.414 0l-4-4a1 0 010-1.414z"
+                                clipRule="evenodd"
+                            />
+                        </svg>
+                    </span>
+                </button>
+
+                {isOpen && (
+                    <div className="absolute z-10 mt-2 w-full bg-white shadow-lg max-h-60 rounded-md overflow-auto border border-gray-200 transition-transform transform scale-95 origin-top opacity-100 animate-dropdown">
+                        {options.map((option, index) => (
+                            <div
+                                key={index}
+                                onClick={() => handleSelect(option)}
+                                className="cursor-pointer select-none relative py-2 pl-10 pr-4"
+                            >
+                                <span
+                                    className={`block truncate ${
+                                        selectedOption === option ? 'font-medium' : 'font-normal'
+                                    }`}
+                                >
+                                    {option}
+                                </span>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
     </div>
                <div className="rounded-xl bg-white p-5">
       <div className="max-h-[53vh] bg-white min-h-[45vh] md:min-w-[60vw] xs:min-w-[60vw] lg:min-w-[30vw] min-w-[75vw] max-w-[40vw] overflow-y-auto rounded-xl">
@@ -271,12 +332,6 @@ function Page() {
 }
 
 export default Page
-
-
-
-
-
-
 
 
 
